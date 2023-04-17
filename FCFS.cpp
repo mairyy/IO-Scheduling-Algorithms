@@ -14,7 +14,7 @@ void FCFS(int requestLocation[], int head, int size) {
         j++;
     }
 
-    cout << "Total seek distance: " << seekCount << endl
+    cout << "Total seek movements: " << seekCount << endl
         << "Seek sequence: ";
     for (int i = 0; i < size; i++) {
         cout << seekSequence[i];
