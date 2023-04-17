@@ -2,52 +2,53 @@
 #include <vector>
 using namespace std;
 bool check[1000] = {0};
-//tim vi tri gan head nhat
-int findMin(int n, int a[], int s)
+int find_nearest(int size, int requestLocation[], int head)
 {
     int min = 9999;
     int index;
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= size; i++)
     {
-        if (!check[a[i]] && abs(a[i] - s) < min)
+        if (!check[requestLocation[i]] && abs(requestLocation[i] - head) < min)
         {
-            min = abs(a[i] - s);
+            min = abs(requestLocation[i] - head);
             index = i;
         }
     }
     return index;
 }
-int main()
+void SSTF(int size, int requestLocation[], int head)
 {
-    int n, s, a[1000];
-    cout << "Number of request: ";
-    cin >> n;
-    cout << "List of request: ";
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-    }
-    cout << "Initial head position: ";
-    cin >> s;
-    int sum = 0;
+    int seekCount = 0;
+    vector<int> seekSequence;
     int i = 0;
-    vector<int> res;
-    //lap cho toi khi thuc hien du n yeu cau
-    while (i <= n)
+    while (i < size)
     {
-        int j = findMin(n, a, s);
-        sum += abs(a[j] - s);
-        s = a[j];
-        check[a[j]] = 1;
-        res.push_back(a[j]);
+        int j = find_nearest(size, requestLocation, head);
+        seekCount += abs(requestLocation[j] - head);
+        head = requestLocation[j];
+        check[requestLocation[j]] = 1;
+        seekSequence.push_back(requestLocation[j]);
         i++;
     }
-    cout << "Total number of seek operations = ";
-    cout << sum << endl;
+    cout << "Total seek distance: " << seekCount << endl;
     cout << "Seek sequence is: ";
-    for (int i = 0; i < res.size(); i++)
+    for (int i = 0; i < seekSequence.size(); i++)
     {
-        cout << res[i] << " ";
+        cout << seekSequence[i] << " ";
     }
+}
+int main()
+{
+    int size, head, requestLocation[1000];
+    cout << "Enter size of request array: ";
+    cin >> size;
+    cout << "Enter the request locations: ";
+    for (int i = 1; i <= size; i++)
+    {
+        cin >> requestLocation[i];
+    }
+    cout << "Enter current track position ";
+    cin >> head;
+    SSTF(size, requestLocation, head);
     return 0;
 }
