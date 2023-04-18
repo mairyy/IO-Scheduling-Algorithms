@@ -2,55 +2,55 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-void C_LOOK(int n, int a[], int s, int pre)
+void C_LOOK(int n, int requestLocation[], int head, int pre)
 {
     vector<int> right;
     vector<int> left;
     vector<int> res;
     for (int i = 1; i <= n; i++)
     {
-        if (a[i] > s)
+        if (requestLocation[i] > head)
         {
-            right.push_back(a[i]);
+            right.push_back(requestLocation[i]);
         }
         else
         {
-            left.push_back(a[i]);
+            left.push_back(requestLocation[i]);
         }
     }
     sort(right.begin(), right.end());
     sort(left.begin(), left.end());
     int total = 0;
-    if (pre < s)
+    if (pre < head)
     {
         for (int i = 0; i < right.size(); i++)
         {
             res.push_back(right[i]);
-            total += abs(right[i] - s);
-            s = right[i];
+            total += abs(right[i] - head);
+            head = right[i];
         }
-        s = left[0];
+        head = left[0];
         for (int i = 0; i < left.size(); i++)
         {
             res.push_back(left[i]);
-            total += abs(left[i] - s);
-            s = left[i];
+            total += abs(left[i] - head);
+            head = left[i];
         }
     }
-    else if (pre > s)
+    else if (pre > head)
     {
         for (int i = left.size() - 1; i >= 0; i--)
         {
             res.push_back(left[i]);
-            total += abs(left[i] - s);
-            s = left[i];
+            total += abs(left[i] - head);
+            head = left[i];
         }
-        s = right[right.size() - 1];
+        head = right[right.size() - 1];
         for (int i = right.size() - 1; i >= 0; i--)
         {
             res.push_back(right[i]);
-            total += abs(right[i] - s);
-            s = right[i];
+            total += abs(right[i] - head);
+            head = right[i];
         }
     }
     cout << "Total seek distance: " << total << endl;
@@ -62,17 +62,17 @@ void C_LOOK(int n, int a[], int s, int pre)
 }
 int main()
 {
-    int n, s, pre, a[1000];
+    int n, head, pre, requestLocation[1000];
     cout << "Enter size of request array: ";
     cin >> n;
     cout << "Enter the request locations: ";
     for (int i = 1; i <= n; i++)
     {
-        cin >> a[i];
+        cin >> requestLocation[i];
     }
     cout << "Enter current track position ";
-    cin >> s;
+    cin >> head;
     cout << "Enter the previous track position: ";
     cin >> pre;
-    C_LOOK(n, a, s, pre);
+    C_LOOK(n, requestLocation, head, pre);
 }
