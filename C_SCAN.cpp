@@ -23,7 +23,6 @@ void C_SCAN(int requestLocation[], int head, int pre, int size, int tracks) {
             }
         }
         seekCount += abs(head - tracks + 1);
-        seekCount += tracks - 1;
         head = 0;
         for (int z = 0; z < k; z++) {
             distance = abs(head - requestLocation[z]);
@@ -48,7 +47,6 @@ void C_SCAN(int requestLocation[], int head, int pre, int size, int tracks) {
             }
         }
         seekCount += head;
-        seekCount += tracks - 1;
         head = tracks - 1;
         for (int z = size - 1; z >= 0; z--) {
             distance = abs(head - requestLocation[z]);
