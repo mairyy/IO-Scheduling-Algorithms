@@ -2,25 +2,11 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-int main()
+void LOOK(int n, int a[], int s, int pre)
 {
-    int n, s, pre, a[1000];
-    int total = 0;
-    cout << "Number of request: ";
-    cin >> n;
-    cout << "List of request: ";
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-    }
-    cout << "Initial head position: ";
-    cin >> s;
-    cout << "The previous position: ";
-    cin >> pre;
     vector<int> right;
     vector<int> left;
     vector<int> res;
-    //chia yeu cau thanh hai phia trai va phai
     for (int i = 1; i <= n; i++)
     {
         if (a[i] > s)
@@ -32,10 +18,9 @@ int main()
             left.push_back(a[i]);
         }
     }
-    //sap xep hai vector tang dan
     sort(right.begin(), right.end());
     sort(left.begin(), left.end());
-    //truong hop huong di la phai
+    int total = 0;
     if (pre < s)
     {
         for (int i = 0; i < right.size(); i++)
@@ -45,7 +30,7 @@ int main()
             s = right[i];
         }
         total += abs(left[left.size() - 1] - s);
-        s = left[left.size()-1];
+        s = left[left.size() - 1];
         for (int i = left.size() - 1; i >= 0; i--)
         {
             res.push_back(left[i]);
@@ -53,7 +38,6 @@ int main()
             s = left[i];
         }
     }
-    //truong hop huong di la trai
     else if (pre > s)
     {
         for (int i = left.size() - 1; i >= 0; i--)
@@ -71,11 +55,26 @@ int main()
             s = right[i];
         }
     }
-    cout << "Total number of seek operations = ";
-    cout << total << endl;
+    cout << "Total seek distance: " << total << endl;
     cout << "Seek sequence is: ";
     for (int i = 0; i < res.size(); i++)
     {
         cout << res[i] << " ";
     }
+}
+int main()
+{
+    int n, s, pre, a[1000];
+    cout << "Enter size of request array: ";
+    cin >> n;
+    cout << "Enter the request locations: ";
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+    }
+    cout << "Enter current track position ";
+    cin >> s;
+    cout << "Enter the previous track position: ";
+    cin >> pre;
+    LOOK(n, a, s, pre);
 }
